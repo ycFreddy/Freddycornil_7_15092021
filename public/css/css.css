@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans&display=swap');
+
+* {
+  font-family: "DM sans";
+}
+
+.header {  
+  color : #D04F4F;
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
+}
+
+
+.form-group .form-control {
+  border-color: rgba(231, 231, 231, 1);;
+  background-color: rgba(231, 231, 231, 1);
+}
+
+.right {
+  right: 0;
+}
