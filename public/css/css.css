@@ -20,7 +20,7 @@
   right: 0;
 }
 
-.autocomplete-items div:hover {
+.autocomplete-items .col-4:hover {
   /*when hovering an item:*/
   background-color: DodgerBlue;
 }
