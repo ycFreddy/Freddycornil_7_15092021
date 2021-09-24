@@ -1829,11 +1829,17 @@ function autocomplete (inp, arr) {
   inp.addEventListener('keydown', (e) => {
     let x = document.getElementById(inp.id + 'autocomplete-list')
     if (x) x = x.getElementsByClassName('col-4')
-    if ((e.keyCode === 39) || (e.keyCode === 40)) {
+    if ((e.keyCode === 39)) {
       currentFocus++
       addActive(x)
-    } else if ((e.keyCode === 38) || (e.keyCode === 37)) {
+    } else if (e.keyCode === 40) {
+      currentFocus = currentFocus + 3
+      addActive(x)
+    } else if (e.keyCode === 37) {
       currentFocus--
+      addActive(x)
+    } else if (e.keyCode === 38) {
+      currentFocus = currentFocus - 3
       addActive(x)
     } else if (e.keyCode === 13) {
       if (currentFocus > -1) {
