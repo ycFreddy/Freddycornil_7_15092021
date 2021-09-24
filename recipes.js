@@ -1770,12 +1770,11 @@ function autocomplete (inp, arr) {
     closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
-    a.className = 'autocomplete-items p-2  bg-primary text-light'
+    a.className = 'autocomplete-items p-2 bg-primary text-light'
     inp.parentNode.appendChild(a)
     if (!val) { return false }
     currentFocus = -1
     for (const i of arr) {
-      console.log(val)
       if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
         const b = document.createElement('div')
         b.className = 'flex-fill'
@@ -1814,8 +1813,8 @@ function autocomplete (inp, arr) {
     x[currentFocus].classList.add('autocomplete-active')
   }
   function removeActive (x) {
-    for (let i = 0; i < x.length; i++) {
-      x[i].classList.remove('autocomplete-active')
+    for (const i of x) {
+      i.classList.remove('autocomplete-active')
     }
   }
 
