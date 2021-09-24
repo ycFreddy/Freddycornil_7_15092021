@@ -1801,7 +1801,7 @@ function autocomplete (inp, arr) {
 
   inp.addEventListener('keydown', (e) => {
     let x = document.getElementById(inp.id + 'autocomplete-list')
-    if (x) x = x.getElementsByTagName('div')
+    if (x) x = x.getElementsByClassName('col-4')
     if (e.keyCode === 40) {
       currentFocus++
       addActive(x)
