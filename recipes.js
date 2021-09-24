@@ -1766,6 +1766,7 @@ console.log(listRecettes)
 function autocomplete (inp, arr) {
   let currentFocus
   inp.addEventListener('click', (e) => {
+    closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 bg-primary text-light'
