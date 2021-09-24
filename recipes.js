@@ -1740,7 +1740,7 @@ const rechercher = (value) => {
   if (resultAppareil.length > 0) return resultAppareil
 }
 
-console.log(rechercher(urlParams.returnUrlRequete()))
+//console.log(rechercher(urlParams.returnUrlRequete()))
 
 const listIngredients = []
 const listUstensiles = []
@@ -1765,24 +1765,25 @@ console.log(listRecettes)
 */
 function autocomplete (inp, arr) {
   let currentFocus
-  inp.addEventListener('input', function (e) {
-    let a; let b; let i; const val = this.value
+  inp.addEventListener('input', (e) => {
+    const val = inp.value
     closeAllLists()
+    const a = document.createElement('div')
+    a.id = inp.id + 'autocomplete-list'
+    a.className = 'autocomplete-items p-2  bg-primary text-light'
+    inp.parentNode.appendChild(a)
     if (!val) { return false }
     currentFocus = -1
-    a = document.createElement('DIV')
-    a.setAttribute('id', this.id + 'autocomplete-list')
-    a.setAttribute('class', 'autocomplete-items p-2  bg-primary text-light')
-    this.parentNode.appendChild(a)
-    for (i = 0; i < arr.length; i++) {
-      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-        b = document.createElement('DIV')
-        b.setAttribute('class', ' flex-fill ')
-        b.innerHTML = '<strong>' + arr[i].substr(0, val.length) + '</strong>'
-        b.innerHTML += arr[i].substr(val.length)
-        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>"
-        b.addEventListener('click', function (e) {
-          inp.value = this.getElementsByTagName('input')[0].value
+    for (const i of arr) {
+      console.log(val)
+      if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
+        const b = document.createElement('div')
+        b.className = 'flex-fill'
+        b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
+        b.innerHTML += i.substr(val.length)
+        b.innerHTML += "<input type='hidden' value='" + i + "'>"
+        b.addEventListener('click', (e) => {
+          inp.value = b.getElementsByTagName('input')[0].value
           closeAllLists()
         })
         a.appendChild(b)
@@ -1790,17 +1791,16 @@ function autocomplete (inp, arr) {
     }
   })
 
-  inp.addEventListener('keypress', function (e) {
-    let x = document.getElementById(this.id + 'autocomplete-list')
+  inp.addEventListener('keydown', (e) => {
+    let x = document.getElementById(inp.id + 'autocomplete-list')
     if (x) x = x.getElementsByTagName('div')
-    if (e.keyCode == 40) {
+    if (e.keyCode === 40) {
       currentFocus++
       addActive(x)
-    } else if (e.keyCode == 38) {
+    } else if (e.keyCode === 38) {
       currentFocus--
       addActive(x)
-    } else if (e.keyCode == 13) {
-      e.preventDefault()
+    } else if (e.keyCode === 13) {
       if (currentFocus > -1) {
         if (x) x[currentFocus].click()
       }
@@ -1818,16 +1818,17 @@ function autocomplete (inp, arr) {
       x[i].classList.remove('autocomplete-active')
     }
   }
+
   function closeAllLists (elmnt) {
     const x = document.getElementsByClassName('autocomplete-items')
-    for (let i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i])
+    for (const i of x) {
+      if (elmnt !== i && elmnt !== inp) {
+        i.parentNode.removeChild(i)
       }
     }
   }
 
-  document.addEventListener('click', function (e) {
+  document.addEventListener('click', (e) => {
     closeAllLists(e.target)
   })
 }
