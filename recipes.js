@@ -1771,6 +1771,7 @@ function autocomplete (inp, arr) {
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 bg-primary text-light'
     inp.parentNode.appendChild(a)
+    currentFocus = -1
     let row = 0
     let d
     if (inp.value) {
@@ -1814,8 +1815,8 @@ function autocomplete (inp, arr) {
     }
   })
   const addElement = (d, i, val) => {
-    let b = document.createElement('div')
-    b.className = 'item col-4'
+    const b = document.createElement('div')
+    b.className = 'col-4'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
     b.innerHTML += i.substr(val.length)
     b.innerHTML += "<input type='hidden' value='" + i + "'>"
@@ -1828,10 +1829,10 @@ function autocomplete (inp, arr) {
   inp.addEventListener('keydown', (e) => {
     let x = document.getElementById(inp.id + 'autocomplete-list')
     if (x) x = x.getElementsByClassName('col-4')
-    if (e.keyCode === 40) {
+    if ((e.keyCode === 39) || (e.keyCode === 40)) {
       currentFocus++
       addActive(x)
-    } else if (e.keyCode === 38) {
+    } else if ((e.keyCode === 38) || (e.keyCode === 37)) {
       currentFocus--
       addActive(x)
     } else if (e.keyCode === 13) {
