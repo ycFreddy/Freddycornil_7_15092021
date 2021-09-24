@@ -1765,7 +1765,7 @@ console.log(listRecettes)
 */
 function autocomplete (inp, arr) {
   let currentFocus
-  inp.addEventListener('click', (e) => {
+  inp.addEventListener('click', () => {
     closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
@@ -1782,7 +1782,7 @@ function autocomplete (inp, arr) {
       for (const i of arr) {
         if ((row % 3) === 0) {
           d = document.createElement('div')
-          d.className = 'row'
+          d.className = 'row m-0'
           a.appendChild(d)
         }
         row++
@@ -1805,7 +1805,7 @@ function autocomplete (inp, arr) {
       if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
         if ((row % 3) === 0) {
           d = document.createElement('div')
-          d.className = 'row'
+          d.className = 'row m-0'
           a.appendChild(d)
         }
         row++
