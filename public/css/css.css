@@ -21,6 +21,7 @@
 }
 
 .autocomplete-items .col-4:hover {
+  cursor: pointer;
   background-color: DodgerBlue;
 }
 .autocomplete-active {

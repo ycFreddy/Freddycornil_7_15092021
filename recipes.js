@@ -1790,7 +1790,7 @@ function autocomplete (inp, arr) {
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 bg-primary text-light'
     inp.parentNode.appendChild(a)
-    if (!val) { return false }
+    if (!val) { inp.click() }
     currentFocus = -1
     let row = 0
     let d
