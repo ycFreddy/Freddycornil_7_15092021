@@ -1765,7 +1765,25 @@ console.log(listRecettes)
 */
 function autocomplete (inp, arr) {
   let currentFocus
-  inp.addEventListener('input', (e) => {
+  inp.addEventListener('click', (e) => {
+    const a = document.createElement('div')
+    a.id = inp.id + 'autocomplete-list'
+    a.className = 'autocomplete-items p-2 bg-primary text-light'
+    inp.parentNode.appendChild(a)
+    let row = 0
+    let d
+    for (const i of arr) {
+      if ((row % 3) === 0) {
+        d = document.createElement('div')
+        d.name = 'toto'
+        d.className = 'row'
+        a.appendChild(d)
+      }
+      row++
+      addElement(d, i, '')
+    }
+  })
+  inp.addEventListener('input', () => {
     const val = inp.value
     closeAllLists()
     const a = document.createElement('div')
@@ -1785,20 +1803,22 @@ function autocomplete (inp, arr) {
           a.appendChild(d)
         }
         row++
-        let b = document.createElement('div')
-        b.className = 'col-4'
-        b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
-        b.innerHTML += i.substr(val.length)
-        b.innerHTML += "<input type='hidden' value='" + i + "'>"
-        b.addEventListener('click', (e) => {
-          inp.value = b.getElementsByTagName('input')[0].value
-          closeAllLists()
-        })
-        d.appendChild(b)
+        addElement(d, i, val)
       }
     }
   })
-
+  const addElement = (d, i, val) => {
+    let b = document.createElement('div')
+    b.className = 'col-4'
+    b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
+    b.innerHTML += i.substr(val.length)
+    b.innerHTML += "<input type='hidden' value='" + i + "'>"
+    b.addEventListener('click', (e) => {
+      inp.value = b.getElementsByTagName('input')[0].value
+      closeAllLists()
+    })
+    d.appendChild(b)
+  }
   inp.addEventListener('keydown', (e) => {
     let x = document.getElementById(inp.id + 'autocomplete-list')
     if (x) x = x.getElementsByClassName('col-4')
@@ -1814,20 +1834,19 @@ function autocomplete (inp, arr) {
       }
     }
   })
-  function addActive (x) {
+  const addActive = (x) => {
     if (!x) return false
     removeActive(x)
     if (currentFocus >= x.length) currentFocus = 0
     if (currentFocus < 0) currentFocus = (x.length - 1)
     x[currentFocus].classList.add('autocomplete-active')
   }
-  function removeActive (x) {
+  const removeActive = (x) => {
     for (const i of x) {
       i.classList.remove('autocomplete-active')
     }
   }
-
-  function closeAllLists (elmnt) {
+  const closeAllLists = (elmnt) => {
     const x = document.getElementsByClassName('autocomplete-items')
     for (const i of x) {
       if (elmnt !== i && elmnt !== inp) {
