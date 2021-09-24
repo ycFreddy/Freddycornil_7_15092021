@@ -1772,15 +1772,21 @@ function autocomplete (inp, arr) {
     inp.parentNode.appendChild(a)
     let row = 0
     let d
-    for (const i of arr) {
-      if ((row % 3) === 0) {
-        d = document.createElement('div')
-        d.name = 'toto'
-        d.className = 'row'
-        a.appendChild(d)
+    if (inp.value) {
+      d = document.createElement('div')
+      d.className = 'row'
+      a.appendChild(d)
+      addElement(d, inp.value, inp.value)
+    } else {
+      for (const i of arr) {
+        if ((row % 3) === 0) {
+          d = document.createElement('div')
+          d.className = 'row'
+          a.appendChild(d)
+        }
+        row++
+        addElement(d, i, '')
       }
-      row++
-      addElement(d, i, '')
     }
   })
   inp.addEventListener('input', () => {
@@ -1798,7 +1804,6 @@ function autocomplete (inp, arr) {
       if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
         if ((row % 3) === 0) {
           d = document.createElement('div')
-          d.name = 'toto'
           d.className = 'row'
           a.appendChild(d)
         }
@@ -1809,7 +1814,7 @@ function autocomplete (inp, arr) {
   })
   const addElement = (d, i, val) => {
     let b = document.createElement('div')
-    b.className = 'col-4'
+    b.className = 'item col-4'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
     b.innerHTML += i.substr(val.length)
     b.innerHTML += "<input type='hidden' value='" + i + "'>"
