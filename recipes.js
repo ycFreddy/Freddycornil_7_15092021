@@ -1774,10 +1774,19 @@ function autocomplete (inp, arr) {
     inp.parentNode.appendChild(a)
     if (!val) { return false }
     currentFocus = -1
+    let row = 0
+    let d
     for (const i of arr) {
       if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
-        const b = document.createElement('div')
-        b.className = 'flex-fill'
+        if ((row % 3) === 0) {
+          d = document.createElement('div')
+          d.name = 'toto'
+          d.className = 'row'
+          a.appendChild(d)
+        }
+        row++
+        let b = document.createElement('div')
+        b.className = 'col-4'
         b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
         b.innerHTML += i.substr(val.length)
         b.innerHTML += "<input type='hidden' value='" + i + "'>"
@@ -1785,7 +1794,7 @@ function autocomplete (inp, arr) {
           inp.value = b.getElementsByTagName('input')[0].value
           closeAllLists()
         })
-        a.appendChild(b)
+        d.appendChild(b)
       }
     }
   })
