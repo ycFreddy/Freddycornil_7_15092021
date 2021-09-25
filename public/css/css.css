@@ -24,6 +24,12 @@
   right: 0;
 }
 
+.ingredientscol, .appareilscol, .ustensilescol {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .autocomplete-items .ingredientscol:hover {
   cursor: pointer;
   background-color: DodgerBlue;
@@ -39,11 +45,9 @@
 .autocomplete-active {
   background-color: DodgerBlue !important;
 }
-
 .rechercher {
   width: 100%;
 }
-
 
 .form-control:not(active), .form-control:active, .form-control:focus{
   color:white;
