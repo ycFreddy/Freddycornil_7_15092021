@@ -92,7 +92,7 @@ function autocomplete (inp, arr, type, color) {
     b.className = 'col-4 ' + type + 'col'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
     b.innerHTML += i.substr(val.length)
-    b.innerHTML += "<input type='hidden' value='" + i + "'>"
+    b.innerHTML += '<input type="hidden" value="' + i + '">'
     b.addEventListener('click', (e) => {
       inp.value = b.getElementsByTagName('input')[0].value
       closeAllLists()
