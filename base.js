@@ -143,5 +143,5 @@ function autocomplete (inp, arr, type, color) {
   }
 }
 autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
-autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-danger')
-autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-success')
+autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
+autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')

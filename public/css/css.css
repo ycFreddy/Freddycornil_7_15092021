@@ -4,6 +4,10 @@
   font-family: "DM sans";
 }
 
+.header h1 {
+  font-weight: bold;
+}
+
 .header {  
   color : #D04F4F;
   text-align: center;
@@ -24,11 +28,11 @@
   cursor: pointer;
   background-color: DodgerBlue;
 }
-.autocomplete-items .appareilscol:hover {
+.autocomplete-items .ustensilescol:hover {
   cursor: pointer;
   background-color: #e45c69;
 }
-.autocomplete-items .ustensilescol:hover {
+.autocomplete-items .appareilscol:hover {
   cursor: pointer;
   background-color: #67b642;
 }
