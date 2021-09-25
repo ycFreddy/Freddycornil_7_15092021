@@ -39,3 +39,8 @@
 .rechercher {
   width: 100%;
 }
+
+
+.form-control:not(active), .form-control:active, .form-control:focus{
+  color:white;
+}
