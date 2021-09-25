@@ -20,9 +20,17 @@
   right: 0;
 }
 
-.autocomplete-items .col-4:hover {
+.autocomplete-items .ingredientscol:hover {
   cursor: pointer;
   background-color: DodgerBlue;
+}
+.autocomplete-items .appareilscol:hover {
+  cursor: pointer;
+  background-color: #e1505d;
+}
+.autocomplete-items .ustensilescol:hover {
+  cursor: pointer;
+  background-color: #67af45;
 }
 .autocomplete-active {
   background-color: DodgerBlue !important;

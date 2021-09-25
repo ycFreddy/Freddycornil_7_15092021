@@ -41,7 +41,6 @@ function autocomplete (inp, arr, type, color) {
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 ' + color + ' text-light'
-    
     inp.parentNode.appendChild(a)
     currentFocus = -1
     let row = 0
@@ -51,7 +50,7 @@ function autocomplete (inp, arr, type, color) {
       d.name = type + 'row'
       d.className = 'row m-0'
       a.appendChild(d)
-      addCol(d, inp.value, inp.value)
+      addCol(d, inp.value, inp.value, type)
     } else {
       for (const i of arr) {
         if ((row % 3) === 0) {
@@ -61,7 +60,7 @@ function autocomplete (inp, arr, type, color) {
           a.appendChild(d)
         }
         row++
-        addCol(d, i, '')
+        addCol(d, i, '', type)
       }
     }
   })
@@ -84,13 +83,13 @@ function autocomplete (inp, arr, type, color) {
           a.appendChild(d)
         }
         row++
-        addCol(d, i, val)
+        addCol(d, i, val, type)
       }
     }
   })
-  const addCol = (d, i, val) => {
+  const addCol = (d, i, val, type) => {
     const b = document.createElement('div')
-    b.className = 'col-4'
+    b.className = 'col-4 ' + type + 'col'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
     b.innerHTML += i.substr(val.length)
     b.innerHTML += "<input type='hidden' value='" + i + "'>"
