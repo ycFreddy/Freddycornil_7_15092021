@@ -1757,37 +1757,34 @@ for (const i of recipes) {
   if (!listAppareils.includes(i.appliance)) listAppareils.push(i.appliance)
   if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
 }
-/*
-console.log(listIngredients)
-console.log(listUstensiles)
-console.log(listAppareils)
-console.log(listRecettes)
-*/
-function autocomplete (inp, arr) {
+
+function autocomplete (inp, arr, type, color) {
   let currentFocus
-  inp.addEventListener('click', () => {
+  inp.addEventListener('click', (e) => {
     closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
-    a.className = 'autocomplete-items p-2 bg-primary text-light'
+    a.className = 'autocomplete-items p-2 ' + color + ' text-light'
     inp.parentNode.appendChild(a)
     currentFocus = -1
     let row = 0
     let d
     if (inp.value) {
       d = document.createElement('div')
-      d.className = 'row'
+      d.name = type + 'row'
+      d.className = 'row m-0'
       a.appendChild(d)
-      addElement(d, inp.value, inp.value)
+      addCol(d, inp.value, inp.value)
     } else {
       for (const i of arr) {
         if ((row % 3) === 0) {
           d = document.createElement('div')
+          d.name = type + 'row'
           d.className = 'row m-0'
           a.appendChild(d)
         }
         row++
-        addElement(d, i, '')
+        addCol(d, i, '')
       }
     }
   })
@@ -1796,7 +1793,7 @@ function autocomplete (inp, arr) {
     closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
-    a.className = 'autocomplete-items p-2 bg-primary text-light'
+    a.className = 'autocomplete-items p-2 ' + color + ' text-light'
     inp.parentNode.appendChild(a)
     if (!val) { inp.click() }
     currentFocus = -1
@@ -1810,11 +1807,11 @@ function autocomplete (inp, arr) {
           a.appendChild(d)
         }
         row++
-        addElement(d, i, val)
+        addCol(d, i, val)
       }
     }
   })
-  const addElement = (d, i, val) => {
+  const addCol = (d, i, val) => {
     const b = document.createElement('div')
     b.className = 'col-4'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
@@ -1847,6 +1844,9 @@ function autocomplete (inp, arr) {
       }
     }
   })
+  inp.addEventListener('focusout', () => {
+    closeAllLists()
+  })
   const addActive = (x) => {
     if (!x) return false
     removeActive(x)
@@ -1859,18 +1859,16 @@ function autocomplete (inp, arr) {
       i.classList.remove('autocomplete-active')
     }
   }
-  const closeAllLists = (elmnt) => {
+  const closeAllLists = (el) => {
     const x = document.getElementsByClassName('autocomplete-items')
     for (const i of x) {
-      if (elmnt !== i && elmnt !== inp) {
+      if (el !== i && el !== inp) {
         i.parentNode.removeChild(i)
       }
     }
   }
-
-  document.addEventListener('click', (e) => {
-    closeAllLists(e.target)
-  })
 }
 
-autocomplete(document.getElementById('ingredients'), listIngredients)
+autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
+autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-danger')
+autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-success')

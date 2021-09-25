@@ -14,17 +14,40 @@
         <img src="public/images/logo.png" alt="Les petits Plats">
         <h1>Les petits plats</h1>
       </header>
-      <form  autocomplete="off">
-        <div class="position-relative d-flex align-items-center form-group">
-          <input name="requete" type="text" class="form-control form-control-lg pr-5" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
-          <div class="form-control-lg fa fa-search position-absolute right"></div>
+      <div class=row>
+        <div class=col>
+          <form  autocomplete="off">
+            <div class="position-relative d-flex align-items-center form-group">
+              <input name="requete" type="text" class="form-control form-control-lg pr-5" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette">
+              <div class="form-control-lg fa fa-search position-absolute right"></div>
+            </div>
+          </form>
         </div>
-      </form>
-      <form autocomplete="off">
-        <div class="autocomplete">
-          <input class="form-control btn-primary text-light" id="ingredients" name="ingredients" type="text" placeholder="Rechercher un ingrédient">
+      </div>
+      <div class=row>
+        <div class=col>
+          <form autocomplete="off">
+            <div>
+              <input class="form-control bg-primary" id="ingredients" name="ingredients" type="text" placeholder="Rechercher un ingrédient">
+            </div>
+          </form>
         </div>
-      </form>
+        <div class=col>
+          <form autocomplete="off">
+            <div>
+              <input class="form-control bg-danger" id="appareils" name="appareils" type="text" placeholder="Rechercher un appareil">
+            </div>
+          </form>
+        </div>
+        <div class=col>
+          <form autocomplete="off">
+            <div>
+              <input class="form-control bg-success" id="ustensiles" name="ustensiles" type="text" placeholder="Rechercher un ustensile">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
