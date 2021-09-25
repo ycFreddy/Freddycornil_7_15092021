@@ -27,3 +27,7 @@
 .autocomplete-active {
   background-color: DodgerBlue !important;
 }
+
+.rechercher {
+  width: 100%;
+}

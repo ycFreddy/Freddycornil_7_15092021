@@ -41,6 +41,7 @@ function autocomplete (inp, arr, type, color) {
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 ' + color + ' text-light'
+    
     inp.parentNode.appendChild(a)
     currentFocus = -1
     let row = 0
