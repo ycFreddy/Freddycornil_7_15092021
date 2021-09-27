@@ -134,7 +134,7 @@ const autocomplete = (inp, arr, type, color) => {
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 ' + color + ' text-light down-items-list'
-    inp.parentNode.appendChild(a)
+    inp.parentNode.appendChild(a) 
     currentFocus = -1
     let row = 0
     let d
@@ -143,7 +143,7 @@ const autocomplete = (inp, arr, type, color) => {
       d.name = type + 'row'
       d.className = 'row m-0'
       a.appendChild(d)
-      addCol(d, inp.value, inp.value, type)
+      addCol(d, inp.value, inp.value)
     } else {
       for (const i of arr) {
         if ((row % 3) === 0) {
@@ -153,7 +153,7 @@ const autocomplete = (inp, arr, type, color) => {
           a.appendChild(d)
         }
         row++
-        addCol(d, i, '', type)
+        addCol(d, i, '')
       }
     }
   })
@@ -176,11 +176,11 @@ const autocomplete = (inp, arr, type, color) => {
           a.appendChild(d)
         }
         row++
-        addCol(d, i, val, type)
+        addCol(d, i, val)
       }
     }
   })
-  const addCol = (d, i, val, type) => {
+  const addCol = (d, i, val) => {
     const b = document.createElement('div')
     b.className = 'col w-400 colonne'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
@@ -237,9 +237,12 @@ const autocomplete = (inp, arr, type, color) => {
       }
     }
   }
+  const sb = document.getElementById('rechercher')
+  sb.addEventListener('click', (e) => {
+    closeAllLists(e.target)
+  })
 }
 autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
 autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
 autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
-
 
