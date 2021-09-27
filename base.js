@@ -1,5 +1,6 @@
+/* eslint-disable no-trailing-spaces */
 class urlParams {
-  static returnUrlRequete () {
+  static returnTabRequete () {
     const req = new URL(document.location.href).searchParams.get('requete')
     const reqIngredients = new URL(document.location.href).searchParams.get('ingredients')
     const reqAppareils = new URL(document.location.href).searchParams.get('appareils')
@@ -8,6 +9,25 @@ class urlParams {
     if (req) { return req }
     if (reqAppareils) { return reqAppareils }
     if (reqUstensiles) { return reqUstensiles }
+  }
+  
+  static returnUrlRequete () {
+    const type = []
+    const urlIngredients = new URL(document.location.href).searchParams.get('ingredients')
+    const urlAppareils = new URL(document.location.href).searchParams.get('appareils')
+    const urlUstensiles = new URL(document.location.href).searchParams.get('ustensiles')
+    if (urlIngredients) {
+      type.push({ type: 'ingredient', valeur: urlIngredients })
+      return type
+    }
+    if (urlAppareils) {
+      type.push({ type: 'appareil', valeur: urlAppareils })
+      return type
+    }
+    if (urlUstensiles) {
+      type.push({ type: 'ustensile', valeur: urlUstensiles })
+      return type
+    }
   }
 }
 
@@ -54,8 +74,27 @@ const afficheCarte = (el, parent) => {
   carteTexte.innerHTML += '<div class="col-6 m-0 p-0 pl-2 description">' + el.description + '</div>'
 }
 
-if (urlParams.returnUrlRequete() !== undefined) {
-  rechercher(urlParams.returnUrlRequete()).forEach(el => {
+// Affiche de le menu de tags uniques
+const ProcessMenuTags = (data) => {
+  const parent = document.getElementById('rechercher')
+  const tag = document.createElement('div')
+  tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02'
+  if (data[0].type === 'ingredient') { tag.className += ' bg-primary text-white' }
+  if (data[0].type === 'appareil') { tag.className += ' bg-success text-white' }
+  if (data[0].type === 'ustensile') { tag.className += ' bg-danger text-white' }
+  tag.innerHTML = data[0].valeur
+  tag.innerHTML += '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
+  parent.appendChild(tag)
+  tag.addEventListener('click', () => {
+    document.location.href = 'index.html'
+  })
+}
+
+if (urlParams.returnTabRequete()) {
+  if (urlParams.returnUrlRequete()) {
+    ProcessMenuTags(urlParams.returnUrlRequete())
+  }
+  rechercher(urlParams.returnTabRequete()).forEach(el => {
     if ((ligne % 3) === 0) {
       l = document.createElement('div')
       l.name = el.id + 'row'
@@ -86,7 +125,7 @@ for (const i of recipes) {
   if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
 }
 
-function autocomplete (inp, arr, type, color) {
+const autocomplete = (inp, arr, type, color) => {
   let currentFocus
   inp.addEventListener('click', () => {
     closeAllLists()
