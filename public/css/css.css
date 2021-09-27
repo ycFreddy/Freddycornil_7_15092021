@@ -37,26 +37,19 @@
 #ustensiles::-webkit-input-placeholder {
   color: white;
 }
-.ingredientscol, .appareilscol, .ustensilescol {
+.colonne {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.autocomplete-items .ingredientscol:hover  {
+.autocomplete-items .colonne:hover  {
   cursor: pointer;
-  background-color: DodgerBlue;
+  background-color: #e7e7e731 !important;;
 }
-.autocomplete-items .ustensilescol:hover {
-  cursor: pointer;
-  background-color: #e45c69;
-}
-.autocomplete-items .appareilscol:hover {
-  cursor: pointer;
-  background-color: #67b642;
-}
+
 .autocomplete-active {
-  background-color: DodgerBlue !important;
+  background-color: #e7e7e731 !important;
 }
 .rechercher {
   width: 100%;

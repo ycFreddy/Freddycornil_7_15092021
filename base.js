@@ -180,7 +180,7 @@ const autocomplete = (inp, arr, type, color) => {
   })
   const addCol = (d, i, val, type) => {
     const b = document.createElement('div')
-    b.className = 'col w-400 ' + type + 'col colonne'
+    b.className = 'col w-400 colonne'
     b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
     b.innerHTML += i.substr(val.length)
     b.innerHTML += '<input type="hidden" value="' + i + '">'
