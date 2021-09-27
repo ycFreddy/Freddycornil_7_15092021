@@ -24,12 +24,12 @@
           </form>
         </div>
       </div>
-      <div class="row">
-        <div>
+      <div id="searchbox" class="row overflow-hidden">
+        <div id="buttonbox">
           <form autocomplete="off">
-            <div class="dropd position-relative align-items-center m-2">
-              <input class="menu form-control p-3 bg-primary text-white" id="ingredients" name="ingredients" type="text" placeholder="Ingrédients">
-              <div class="chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
+            <div class="dropd position-relative align-items-center m-2 overflow-hidden">
+              <input class="menu form-control p-3 bg-primary text-white overflow-hidden" id="ingredients" name="ingredients" type="text" placeholder="Ingrédients">
+              <div id="ingredientschevron" class="overflow-hidden chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
             </div>
           </form>
         </div>
@@ -37,7 +37,7 @@
           <form autocomplete="off">
             <div class="dropd position-relative align-items-center m-2">
               <input class="menu form-control p-3 bg-success text-white" id="appareils" name="appareils" type="text" placeholder="Appareils">
-              <div class="chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
+              <div id="appareilschevron" class="chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
             </div>
           </form>
         </div>
@@ -45,13 +45,13 @@
           <form autocomplete="off">
             <div class="dropd position-relative align-items-center m-2">
               <input class="menu form-control p-3 bg-danger text-white" id="ustensiles" name="ustensiles" type="text" placeholder="Ustensiles">
-              <div class="chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
+              <div id="ustensileschevron" class="chevron position-absolute form-control-lg fas fa-chevron-down text-white"></div>
             </div>
           </form>
         </div>
       </div>
     <div id="resultats"></div>
-    
+  </div>
   </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
