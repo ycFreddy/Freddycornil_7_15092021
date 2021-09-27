@@ -48,6 +48,16 @@
   text-overflow: ellipsis;
 }
 
+#searchboxes {
+  position: absolute;
+  z-index: 99;
+}
+
+#resultats {
+  position: relative;
+  top: 5em;
+}
+
 .autocomplete-items .colonne:hover  {
   cursor: pointer;
   background-color: #e7e7e731 !important;;
@@ -101,12 +111,6 @@
 .down-items-list {
   animation-name: modalopen;
   animation-duration: 330ms;
-  animation-fill-mode: forwards;
-}
-
-.up-items-list {
-  transform : translateY(20px);
-  transition: transform 330ms ease-in-out;
   animation-fill-mode: forwards;
 }
 
