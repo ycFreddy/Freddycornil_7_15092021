@@ -87,7 +87,7 @@
 .description {
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 150px;
+  max-height: 160px;
 }
 .dropd{
   display: inline-block;
