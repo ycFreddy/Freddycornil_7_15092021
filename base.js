@@ -159,6 +159,8 @@ const autocomplete = (inp, arr, type, color) => {
   })
   inp.addEventListener('input', () => {    
     closeAllLists()
+    document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
+    document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
     const val = inp.value
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
