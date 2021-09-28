@@ -109,12 +109,12 @@
 }
 
 .down-items-list {
-  animation-name: modalopen;
+  animation-name: listopen;
   animation-duration: 330ms;
   animation-fill-mode: forwards;
 }
 
-@keyframes modalopen {
+@keyframes listopen {
   0% {
     opacity: 0;
     transform: translateY(-150px);

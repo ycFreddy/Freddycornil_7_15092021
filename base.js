@@ -127,10 +127,10 @@ for (const i of recipes) {
 
 const autocomplete = (inp, arr, type, color) => {
   let currentFocus  
-  inp.addEventListener('click', () => {
+  inp.addEventListener('click', () => {    
+    closeAllLists()
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
-    closeAllLists()
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 ' + color + ' text-light down-items-list'
@@ -157,9 +157,9 @@ const autocomplete = (inp, arr, type, color) => {
       }
     }
   })
-  inp.addEventListener('input', () => {
-    const val = inp.value
+  inp.addEventListener('input', () => {    
     closeAllLists()
+    const val = inp.value
     const a = document.createElement('div')
     a.id = inp.id + 'autocomplete-list'
     a.className = 'autocomplete-items p-2 ' + color + ' text-light'
@@ -231,7 +231,7 @@ const autocomplete = (inp, arr, type, color) => {
     const x = document.getElementsByClassName('autocomplete-items')
     for (const i of x) {
       document.getElementById(i.id.replace('autocomplete-list', '') + 'chevron').classList.remove('up-chevron') 
-      document.getElementById(i.id.replace('autocomplete-list', '') + 'chevron').classList.add('down-chevron')     
+      document.getElementById(i.id.replace('autocomplete-list', '') + 'chevron').classList.add('down-chevron')      
       if (el !== i && el !== inp) {
         i.parentNode.removeChild(i)
       }
