@@ -1,12 +1,16 @@
 const rechercher = (value) => {
-  const resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.toUpperCase() === value.toUpperCase()))
-  const resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.toUpperCase() === value.toUpperCase()))
-  let resultNomRecette = recipes.filter(({ name }) => name.toUpperCase().search(value.toUpperCase()) !== -1)
-  const resultAppareil = recipes.filter(({ appliance }) => appliance.toUpperCase() === value.toUpperCase())
-  if (resultIngredient.length > 0) return resultIngredient
-  if (resultUstensile.length > 0) return resultUstensile
-  if (resultAppareil.length > 0) return resultAppareil
-  if (resultNomRecette.length > 0) { return resultNomRecette } else { resultNomRecette = []; return resultNomRecette }
+  let resIng = []; let resUst = []; let resRec = []; let resApp = []
+  //let reg = new RegExp ('\\b' + value + '\\b', 'i')
+  let reg = new RegExp (value, 'i')
+  let resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
+  let resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
+  let resultNomRecette = recipes.filter(({ name }) => name.match(reg))
+  let resultAppareil = recipes.filter(({ appliance }) => appliance.match(reg))
+  if (resultIngredient.length > 0) { resIng = resultIngredient }
+  if (resultUstensile.length > 0) { resUst = resultUstensile }
+  if (resultAppareil.length > 0) { resApp = resultAppareil }
+  if (resultNomRecette.length > 0) { resRec = resultNomRecette }
+  return new Set(resRec.concat(resIng).concat(resUst).concat(resApp))
 }
 
 const afficheCarte = (el, parent) => {
@@ -44,10 +48,8 @@ const ProcessMenuTags = (data) => {
   parent.innerHTML = ''
   for (const i of data.ingredients) {
     const tag = document.createElement('div')
-    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02'
-    tag.className += ' bg-primary text-white'
-    tag.innerHTML = i
-    tag.innerHTML += '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
+    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02 bg-primary text-white'
+    tag.innerHTML = i + '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
     parent.appendChild(tag)
     tag.addEventListener('click', () => {
       tabTags(i, 'ingredients', 'del')
@@ -55,10 +57,8 @@ const ProcessMenuTags = (data) => {
   }
   for (const a of data.appareils) {
     const tag = document.createElement('div')
-    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02'
-    tag.className += ' bg-success text-white'
-    tag.innerHTML = a
-    tag.innerHTML += '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
+    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02 bg-success text-white'
+    tag.innerHTML = a + '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
     parent.appendChild(tag)
     tag.addEventListener('click', () => {
       tabTags(a, 'appareils', 'del')
@@ -66,10 +66,8 @@ const ProcessMenuTags = (data) => {
   }
   for (const u of data.ustensiles) {
     const tag = document.createElement('div')
-    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02'
-    tag.className += ' bg-danger text-white'
-    tag.innerHTML = u
-    tag.innerHTML += '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
+    tag.className = 'alert d-flex align-items-center justify-content-between m-2 p-02 bg-danger text-white'
+    tag.innerHTML = u + '<button type="button" class="close" data-dismiss="alert"><span><i class="text-white far fa-times-circle pl-2"></i></span></button>'
     parent.appendChild(tag)
     tag.addEventListener('click', () => {
       tabTags(u, 'ustensiles', 'del')
@@ -106,7 +104,6 @@ const tabTags = (value, type, op) => {
   if (op === 'add') {
     tabTag[type].push(value)
   } else {
-    console.log(tabTag[type].findIndex(e => e === value))
     tabTag[type].splice(tabTag[type].findIndex(e => e === value), 1)
   }
   ProcessMenuTags(tabTag)
@@ -132,26 +129,34 @@ requete.addEventListener('input', () => {
       l.appendChild(r)
       afficheCarte(el, r)
     })
+    select(rechercher(requete.value))
+  } else {
+    select(recipes)
   }
 })
 requete.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault() }
 })
 
-const listIngredients = []
-const listUstensiles = []
-const listAppareils = []
-const listRecettes = []
+const select = (data) => {
+  let listIngredients = []
+  let listUstensiles = []
+  let listAppareils = []
+  let listRecettes = []
 
-for (const i of recipes) {
-  for (const j of i.ingredients) {
-    if (!listIngredients.includes(j.ingredient)) listIngredients.push(j.ingredient)
+  for (const i of data) {
+    for (const j of i.ingredients) {
+      if (!listIngredients.includes(j.ingredient)) listIngredients.push(j.ingredient)
+    }
+    for (const j of i.ustensils) {
+      if (!listUstensiles.includes(j)) listUstensiles.push(j)
+    }
+    if (!listAppareils.includes(i.appliance)) listAppareils.push(i.appliance)
+    if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
   }
-  for (const j of i.ustensils) {
-    if (!listUstensiles.includes(j)) listUstensiles.push(j)
-  }
-  if (!listAppareils.includes(i.appliance)) listAppareils.push(i.appliance)
-  if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
+  autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
+  autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
+  autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
 }
 
 const autocomplete = (inp, arr, type, color) => {
@@ -274,6 +279,3 @@ const autocomplete = (inp, arr, type, color) => {
     closeAllLists(e.target)
   })
 }
-autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
-autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
-autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
