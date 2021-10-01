@@ -1,12 +1,12 @@
 import { recipes } from './recipes.js'
 
 const rechercher = (value) => {
-  let reg = new RegExp ('\\b' + value + '\\b', 'i')
-  //let reg = new RegExp (value, 'i')
-  let resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
-  let resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
-  let resultNomRecette = recipes.filter(({ name }) => name.match(reg))
-  let resultAppareil = recipes.filter(({ appliance }) => appliance.match(reg))
+  const reg = new RegExp('\\b' + value + '\\b', 'i')
+  // let reg = new RegExp (value, 'i')
+  const resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
+  const resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
+  const resultNomRecette = recipes.filter(({ name }) => name.match(reg))
+  const resultAppareil = recipes.filter(({ appliance }) => appliance.match(reg))
   return new Set(resultIngredient.concat(resultUstensile).concat(resultNomRecette).concat(resultAppareil))
 }
 
@@ -74,7 +74,7 @@ const ProcessMenuTags = (data) => {
   let ligne = 0
   const res = document.getElementById('resultats')
   res.innerHTML = ''
-  for (let z in data) {
+  for (const z in data) {
     data[z].forEach(e => {
       rechercher(e).forEach(el => {
         if ((ligne % 3) === 0) {
@@ -94,9 +94,9 @@ const ProcessMenuTags = (data) => {
 }
 
 const tabTag = []
-tabTag['ingredients'] = []
-tabTag['appareils'] = []
-tabTag['ustensiles'] = []
+tabTag.ingredients = []
+tabTag.appareils = []
+tabTag.ustensiles = []
 const tabTags = (value, type, op) => {
   if (op === 'add') {
     tabTag[type].push(value)
@@ -228,10 +228,10 @@ const autocomplete = (inp, arr, type, color) => {
 }
 
 const select = (data) => {
-  let listIngredients = []
-  let listUstensiles = []
-  let listAppareils = []
-  let listRecettes = []
+  const listIngredients = []
+  const listUstensiles = []
+  const listAppareils = []
+  const listRecettes = []
 
   for (const i of data) {
     for (const j of i.ingredients) {
