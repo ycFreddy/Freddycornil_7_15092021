@@ -107,7 +107,6 @@ const tabTags = (value, type, op) => {
 const autocomplete = (inp, arr, type, color) => {
   let currentFocus
   inp.addEventListener('click', () => {
-    console.log(arr)
     closeAllLists()
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
@@ -268,6 +267,8 @@ requete.addEventListener('input', () => {
       afficheCarte(el, r)
     })
     select(rechercher(requete.value))
+  } else {
+    select(recipes)
   }
 })
 if (requete.value === '') select(recipes)
