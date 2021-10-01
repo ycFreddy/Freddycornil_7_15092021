@@ -1,6 +1,6 @@
 const rechercher = (value) => {
-  //let reg = new RegExp ('\\b' + value + '\\b', 'i')
-  let reg = new RegExp (value, 'i')
+  let reg = new RegExp ('\\b' + value + '\\b', 'i')
+  //let reg = new RegExp (value, 'i')
   let resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
   let resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
   let resultNomRecette = recipes.filter(({ name }) => name.match(reg))
