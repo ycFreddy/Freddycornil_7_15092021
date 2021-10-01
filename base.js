@@ -1,3 +1,5 @@
+import { recipes } from './recipes.js'
+
 const rechercher = (value) => {
   let reg = new RegExp ('\\b' + value + '\\b', 'i')
   //let reg = new RegExp (value, 'i')
