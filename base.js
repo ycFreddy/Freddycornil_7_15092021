@@ -1,16 +1,11 @@
 const rechercher = (value) => {
-  let resIng = []; let resUst = []; let resRec = []; let resApp = []
   //let reg = new RegExp ('\\b' + value + '\\b', 'i')
   let reg = new RegExp (value, 'i')
   let resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
   let resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
   let resultNomRecette = recipes.filter(({ name }) => name.match(reg))
   let resultAppareil = recipes.filter(({ appliance }) => appliance.match(reg))
-  if (resultIngredient.length > 0) { resIng = resultIngredient }
-  if (resultUstensile.length > 0) { resUst = resultUstensile }
-  if (resultAppareil.length > 0) { resApp = resultAppareil }
-  if (resultNomRecette.length > 0) { resRec = resultNomRecette }
-  return new Set(resRec.concat(resIng).concat(resUst).concat(resApp))
+  return new Set(resultIngredient.concat(resultUstensile).concat(resultNomRecette).concat(resultAppareil))
 }
 
 const afficheCarte = (el, parent) => {
@@ -109,59 +104,10 @@ const tabTags = (value, type, op) => {
   ProcessMenuTags(tabTag)
 }
 
-const requete = document.getElementById('requete')
-requete.addEventListener('input', () => {
-  let l
-  let ligne = 0
-  const parent = document.getElementById('resultats')
-  parent.innerHTML = ''
-  if (requete.value.length > 2) {
-    rechercher(requete.value).forEach(el => {
-      if ((ligne % 3) === 0) {
-        l = document.createElement('div')
-        l.name = el.id + 'row'
-        l.className = 'row'
-        parent.appendChild(l)
-      }
-      ligne++
-      const r = document.createElement('div')
-      r.className = 'col-4 p-2'
-      l.appendChild(r)
-      afficheCarte(el, r)
-    })
-    select(rechercher(requete.value))
-  } else {
-    select(recipes)
-  }
-})
-requete.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') { e.preventDefault() }
-})
-
-const select = (data) => {
-  let listIngredients = []
-  let listUstensiles = []
-  let listAppareils = []
-  let listRecettes = []
-
-  for (const i of data) {
-    for (const j of i.ingredients) {
-      if (!listIngredients.includes(j.ingredient)) listIngredients.push(j.ingredient)
-    }
-    for (const j of i.ustensils) {
-      if (!listUstensiles.includes(j)) listUstensiles.push(j)
-    }
-    if (!listAppareils.includes(i.appliance)) listAppareils.push(i.appliance)
-    if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
-  }
-  autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
-  autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
-  autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
-}
-
 const autocomplete = (inp, arr, type, color) => {
   let currentFocus
   inp.addEventListener('click', () => {
+    console.log(arr)
     closeAllLists()
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
@@ -279,3 +225,52 @@ const autocomplete = (inp, arr, type, color) => {
     closeAllLists(e.target)
   })
 }
+
+const select = (data) => {
+  let listIngredients = []
+  let listUstensiles = []
+  let listAppareils = []
+  let listRecettes = []
+
+  for (const i of data) {
+    for (const j of i.ingredients) {
+      if (!listIngredients.includes(j.ingredient)) listIngredients.push(j.ingredient)
+    }
+    for (const j of i.ustensils) {
+      if (!listUstensiles.includes(j)) listUstensiles.push(j)
+    }
+    if (!listAppareils.includes(i.appliance)) listAppareils.push(i.appliance)
+    if (!listRecettes.includes(i.name)) listRecettes.push(i.name)
+  }
+  autocomplete(document.getElementById('ingredients'), listIngredients, 'ingredients', 'bg-primary')
+  autocomplete(document.getElementById('appareils'), listAppareils, 'appareils', 'bg-success')
+  autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
+}
+
+const requete = document.getElementById('requete')
+requete.addEventListener('input', () => {
+  let l
+  let ligne = 0
+  const parent = document.getElementById('resultats')
+  parent.innerHTML = ''
+  if (requete.value.length > 2) {
+    rechercher(requete.value).forEach(el => {
+      if ((ligne % 3) === 0) {
+        l = document.createElement('div')
+        l.name = el.id + 'row'
+        l.className = 'row'
+        parent.appendChild(l)
+      }
+      ligne++
+      const r = document.createElement('div')
+      r.className = 'col-4 p-2'
+      l.appendChild(r)
+      afficheCarte(el, r)
+    })
+    select(rechercher(requete.value))
+  }
+})
+if (requete.value === '') select(recipes)
+requete.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault() }
+})
