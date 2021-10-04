@@ -86,7 +86,7 @@ const ProcessMenuTags = (data) => {
       tabTags(u, 'ustensiles', 'del')
     })
   }
-  let resdata = []
+  const resdata = []
   for (const z in data) {
     data[z].forEach(e => {
       rechercher(e).forEach(el => {
@@ -96,7 +96,7 @@ const ProcessMenuTags = (data) => {
   }
   const result = [...new Set(resdata)]
   afficheListe(result)
-  select(result)
+  if (result.length === 0) { select(recipes) } else { select(result) }
 }
 
 const tabTag = []
