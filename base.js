@@ -70,27 +70,30 @@ const ProcessMenuTags = (data) => {
       tabTags(u, 'ustensiles', 'del')
     })
   }
-  let l
-  let ligne = 0
+  let ligne
+  let row = 0
   const res = document.getElementById('resultats')
   res.innerHTML = ''
+  let resdata = []
   for (const z in data) {
     data[z].forEach(e => {
+      resdata.push(rechercher(e))
       rechercher(e).forEach(el => {
-        if ((ligne % 3) === 0) {
-          l = document.createElement('div')
-          l.name = el.id + 'row'
-          l.className = 'row'
-          res.appendChild(l)
+        if ((row % 3) === 0) {
+          ligne = document.createElement('div')
+          ligne.name = el.id + 'row'
+          ligne.className = 'row'
+          res.appendChild(ligne)
         }
-        ligne++
-        const r = document.createElement('div')
-        r.className = 'col-4 p-2'
-        l.appendChild(r)
-        afficheCarte(el, r)
+        row++
+        const col = document.createElement('div')
+        col.className = 'col-4 p-2'
+        ligne.appendChild(col)
+        afficheCarte(el, col)
       })
     })
   }
+  //console.log(resdata)
 }
 
 const tabTag = []
@@ -112,30 +115,22 @@ const autocomplete = (inp, arr, type, color) => {
     closeAllLists()
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
-    const a = document.createElement('div')
-    a.id = inp.id + 'autocomplete-list'
-    a.className = 'autocomplete-items p-2 ' + color + ' text-light down-items-list'
-    inp.parentNode.appendChild(a)
+    const container = document.createElement('div')
+    container.id = inp.id + 'autocomplete-list'
+    container.className = 'autocomplete-items p-2 ' + color + ' text-light down-items-list'
+    inp.parentNode.appendChild(container)
     currentFocus = -1
     let row = 0
-    let d
-    if (inp.value) {
-      d = document.createElement('div')
-      d.name = type + 'row'
-      d.className = 'row m-0'
-      a.appendChild(d)
-      addCol(d, inp.value, inp.value)
-    } else {
-      for (const i of arr) {
-        if ((row % 3) === 0) {
-          d = document.createElement('div')
-          d.name = type + 'row'
-          d.className = 'row m-0'
-          a.appendChild(d)
-        }
-        row++
-        addCol(d, i, '', type)
+    let ligne
+    for (const i of arr) {
+      if ((row % 3) === 0) {
+        ligne = document.createElement('div')
+        ligne.name = type + 'row'
+        ligne.className = 'row m-0'
+        container.appendChild(ligne)
       }
+      row++
+      addCol(ligne, i, '', type)
     }
   })
   inp.addEventListener('input', () => {
@@ -143,38 +138,37 @@ const autocomplete = (inp, arr, type, color) => {
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
     const val = inp.value
-    const a = document.createElement('div')
-    a.id = inp.id + 'autocomplete-list'
-    a.className = 'autocomplete-items p-2 ' + color + ' text-light'
+    const container = document.createElement('div')
+    container.id = inp.id + 'autocomplete-list'
+    container.className = 'autocomplete-items p-2 ' + color + ' text-light'
     inp.parentNode.appendChild(a)
     if (!val) { inp.click() }
     currentFocus = -1
     let row = 0
-    let d
+    let ligne
+    let reg = new RegExp(val, 'i')
     for (const i of arr) {
-      if (i.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
+      if (i.match(reg)) {
         if ((row % 3) === 0) {
-          d = document.createElement('div')
-          d.className = 'row m-0'
-          a.appendChild(d)
+          ligne = document.createElement('div')
+          ligne.className = 'row m-0'
+          container.appendChild(ligne)
         }
         row++
-        addCol(d, i, val, type)
+        addCol(ligne, i, val, type)
       }
     }
   })
-  const addCol = (d, i, val, type) => {
-    const b = document.createElement('div')
-    b.className = 'col w-400 colonne'
-    b.innerHTML = '<strong>' + i.substr(0, val.length) + '</strong>'
-    b.innerHTML += i.substr(val.length)
-    b.innerHTML += '<input type="hidden" value="' + i + '">'
-    b.addEventListener('click', (e) => {
-      inp.value = b.getElementsByTagName('input')[0].value
-      tabTags(inp.value, type, 'add')
+  const addCol = (ligne, i, val, type) => {
+    const col = document.createElement('div')
+    col.className = 'col w-400 colonne'
+    col.innerHTML = i
+    col.innerHTML += '<input type="hidden" value="' + i + '">'
+    col.addEventListener('click', (e) => {
+      tabTags(i, type, 'add')
       closeAllLists()
     })
-    d.appendChild(b)
+    ligne.appendChild(col)
   }
   inp.addEventListener('keydown', (e) => {
     let x = document.getElementById(inp.id + 'autocomplete-list')
@@ -232,7 +226,6 @@ const select = (data) => {
   const listUstensiles = []
   const listAppareils = []
   const listRecettes = []
-
   for (const i of data) {
     for (const j of i.ingredients) {
       if (!listIngredients.includes(j.ingredient)) listIngredients.push(j.ingredient)
@@ -250,23 +243,23 @@ const select = (data) => {
 
 const requete = document.getElementById('requete')
 requete.addEventListener('input', () => {
-  let l
-  let ligne = 0
+  let ligne
+  let row = 0
   const parent = document.getElementById('resultats')
   parent.innerHTML = ''
   if (requete.value.length > 2) {
     rechercher(requete.value).forEach(el => {
-      if ((ligne % 3) === 0) {
-        l = document.createElement('div')
-        l.name = el.id + 'row'
-        l.className = 'row'
-        parent.appendChild(l)
+      if ((row % 3) === 0) {
+        ligne = document.createElement('div')
+        ligne.name = el.id + 'row'
+        ligne.className = 'row'
+        parent.appendChild(ligne)
       }
-      ligne++
-      const r = document.createElement('div')
-      r.className = 'col-4 p-2'
-      l.appendChild(r)
-      afficheCarte(el, r)
+      row++
+      const col = document.createElement('div')
+      col.className = 'col-4 p-2'
+      ligne.appendChild(col)
+      afficheCarte(el, col)
     })
     select(rechercher(requete.value))
   } else {
