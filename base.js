@@ -99,19 +99,6 @@ const ProcessMenuTags = (data) => {
   if (result.length === 0) { select(recipes) } else { select(result) }
 }
 
-const tabTag = []
-tabTag.ingredients = []
-tabTag.appareils = []
-tabTag.ustensiles = []
-const tabTags = (value, type, op) => {
-  if (op === 'add') {
-    tabTag[type].push(value)
-  } else {
-    tabTag[type].splice(tabTag[type].findIndex(e => e === value), 1)
-  }
-  ProcessMenuTags(tabTag)
-}
-
 /**
  * Liste déroulantes de selection
  * @param {*} inp input du formulaire
@@ -280,8 +267,24 @@ const afficheListe = (data) => {
 }
 
 /**
- * Requete principale
+ * Initialisation de la selction
  */
+const tabTag = []
+tabTag.ingredients = []
+tabTag.appareils = []
+tabTag.ustensiles = []
+const tabTags = (value, type, op) => {
+  if (op === 'add') {
+    tabTag[type].push(value)
+  } else {
+    tabTag[type].splice(tabTag[type].findIndex(e => e === value), 1)
+  }
+  ProcessMenuTags(tabTag)
+}
+
+/**
+* Requete principale
+*/
 const requete = document.getElementById('requete')
 requete.addEventListener('input', (e) => {
   if (requete.value.length > 2) {
