@@ -1,5 +1,13 @@
+/**
+ * importe l'objet recettes
+ */
 import { recipes } from './recipes.js'
 
+/**
+ * Recherche dans l'objet recettes la valeur en paramètre
+ * @param {*} value nom, ingrédient, ustensile ou appareil
+ * @returns return un objet contenant les recette correspondantes à la recherche sans doublons
+ */
 const rechercher = (value) => {
   const reg = new RegExp('\\b' + value + '\\b', 'i')
   // let reg = new RegExp (value, 'i')
@@ -10,6 +18,11 @@ const rechercher = (value) => {
   return new Set(resultIngredient.concat(resultUstensile).concat(resultNomRecette).concat(resultAppareil))
 }
 
+/**
+ * Affiche les vignettes recettes
+ * @param {*} el Recette
+ * @param {*} parent element parent auquel la vignette est rattachée
+ */
 const afficheCarte = (el, parent) => {
   const carte = document.createElement('div')
   carte.className = 'card'
@@ -39,7 +52,10 @@ const afficheCarte = (el, parent) => {
   carteTexte.innerHTML += '<div class="col-6 m-0 p-0 pl-2 description">' + el.description + '</div>'
 }
 
-// Affiche de le menu de tags uniques
+/**
+ * Affiche le menu tag
+ * @param {*} data tableau de rectte
+ */
 const ProcessMenuTags = (data) => {
   const parent = document.getElementById('tags')
   parent.innerHTML = ''
@@ -70,30 +86,17 @@ const ProcessMenuTags = (data) => {
       tabTags(u, 'ustensiles', 'del')
     })
   }
-  let ligne
-  let row = 0
-  const res = document.getElementById('resultats')
-  res.innerHTML = ''
   let resdata = []
   for (const z in data) {
     data[z].forEach(e => {
-      resdata.push(rechercher(e))
       rechercher(e).forEach(el => {
-        if ((row % 3) === 0) {
-          ligne = document.createElement('div')
-          ligne.name = el.id + 'row'
-          ligne.className = 'row'
-          res.appendChild(ligne)
-        }
-        row++
-        const col = document.createElement('div')
-        col.className = 'col-4 p-2'
-        ligne.appendChild(col)
-        afficheCarte(el, col)
+        resdata.push(el)
       })
     })
   }
-  //console.log(resdata)
+  const result = [...new Set(resdata)]
+  afficheListe(result)
+  select(result)
 }
 
 const tabTag = []
@@ -109,6 +112,13 @@ const tabTags = (value, type, op) => {
   ProcessMenuTags(tabTag)
 }
 
+/**
+ * Liste déroulantes de selection
+ * @param {*} inp input du formulaire
+ * @param {*} arr liste de recherche
+ * @param {*} type type de recherche
+ * @param {*} color couleur de l'input
+ */
 const autocomplete = (inp, arr, type, color) => {
   let currentFocus
   inp.addEventListener('click', () => {
@@ -221,6 +231,10 @@ const autocomplete = (inp, arr, type, color) => {
   })
 }
 
+/**
+ * Rempli les fomrulaires de selection
+ * @param {*} data liste de selection
+ */
 const select = (data) => {
   const listIngredients = []
   const listUstensiles = []
@@ -241,26 +255,13 @@ const select = (data) => {
   autocomplete(document.getElementById('ustensiles'), listUstensiles, 'ustensiles', 'bg-danger')
 }
 
+/**
+ * Requete principale
+ */
 const requete = document.getElementById('requete')
 requete.addEventListener('input', () => {
-  let ligne
-  let row = 0
-  const parent = document.getElementById('resultats')
-  parent.innerHTML = ''
   if (requete.value.length > 2) {
-    rechercher(requete.value).forEach(el => {
-      if ((row % 3) === 0) {
-        ligne = document.createElement('div')
-        ligne.name = el.id + 'row'
-        ligne.className = 'row'
-        parent.appendChild(ligne)
-      }
-      row++
-      const col = document.createElement('div')
-      col.className = 'col-4 p-2'
-      ligne.appendChild(col)
-      afficheCarte(el, col)
-    })
+    afficheListe(rechercher(requete.value))
     select(rechercher(requete.value))
   } else {
     select(recipes)
@@ -270,3 +271,27 @@ if (requete.value === '') select(recipes)
 requete.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') { e.preventDefault() }
 })
+
+/**
+ * Affiche le liste de recette
+ * @param {*} data tableau de recette
+ */
+const afficheListe = (data) => {
+  let ligne
+  let row = 0
+  const res = document.getElementById('resultats')
+  res.innerHTML = ''
+  data.forEach(elmt => {
+    if ((row % 3) === 0) {
+      ligne = document.createElement('div')
+      ligne.name = elmt.id + 'row'
+      ligne.className = 'row'
+      res.appendChild(ligne)
+    }
+    row++
+    const col = document.createElement('div')
+    col.className = 'col-4 p-2'
+    ligne.appendChild(col)
+    afficheCarte(elmt, col)
+  })
+}
