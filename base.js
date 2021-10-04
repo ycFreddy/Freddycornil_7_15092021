@@ -109,43 +109,38 @@ const ProcessMenuTags = (data) => {
 const autocomplete = (inp, arr, type, color) => {
   let currentFocus
   inp.addEventListener('click', () => {
+    addRow(inp, arr, '', '', type, 'click')
+  })
+  inp.addEventListener('input', () => {
+    const val = inp.value
+    if (!val) { inp.click() }
+    const reg = new RegExp(val, 'i')
+    addRow(inp, arr, reg, val, type, 'input')
+  })
+  const addRow = (inp, arr, reg, val, type, event) => {
     closeAllLists()
     document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
     document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
     const container = document.createElement('div')
     container.id = inp.id + 'autocomplete-list'
-    container.className = 'autocomplete-items p-2 ' + color + ' text-light down-items-list'
+    container.className = 'autocomplete-items p-2 ' + color + ' text-light'
+    if (event === 'click') container.className += ' down-items-list'
     inp.parentNode.appendChild(container)
     currentFocus = -1
     let row = 0
     let ligne
     for (const i of arr) {
-      if ((row % 3) === 0) {
-        ligne = document.createElement('div')
-        ligne.name = type + 'row'
-        ligne.className = 'row m-0'
-        container.appendChild(ligne)
-      }
-      row++
-      addCol(ligne, i, '', type)
-    }
-  })
-  inp.addEventListener('input', () => {
-    closeAllLists()
-    document.getElementById(inp.id + 'chevron').classList.add('up-chevron')
-    document.getElementById(inp.id + 'chevron').classList.remove('down-chevron')
-    const val = inp.value
-    const container = document.createElement('div')
-    container.id = inp.id + 'autocomplete-list'
-    container.className = 'autocomplete-items p-2 ' + color + ' text-light'
-    inp.parentNode.appendChild(a)
-    if (!val) { inp.click() }
-    currentFocus = -1
-    let row = 0
-    let ligne
-    let reg = new RegExp(val, 'i')
-    for (const i of arr) {
-      if (i.match(reg)) {
+      if (reg) {
+        if (i.match(reg)) {
+          if ((row % 3) === 0) {
+            ligne = document.createElement('div')
+            ligne.className = 'row m-0'
+            container.appendChild(ligne)
+          }
+          row++
+          addCol(ligne, i, val, type)
+        }
+      } else {
         if ((row % 3) === 0) {
           ligne = document.createElement('div')
           ligne.className = 'row m-0'
@@ -155,7 +150,7 @@ const autocomplete = (inp, arr, type, color) => {
         addCol(ligne, i, val, type)
       }
     }
-  })
+  }
   const addCol = (ligne, i, val, type) => {
     const col = document.createElement('div')
     col.className = 'col w-400 colonne'
@@ -212,10 +207,16 @@ const autocomplete = (inp, arr, type, color) => {
       }
     }
   }
-  const sb = document.getElementById('rechercher')
-  sb.addEventListener('click', (e) => {
+  const rech = document.getElementById('rechercher')
+  rech.addEventListener('click', (e) => {
     closeAllLists(e.target)
   })
+  const chev = document.getElementsByClassName('chevron')
+  for (const c of chev) {
+    c.addEventListener('click', (e) => {
+      closeAllLists(e.target)
+    })
+  }
 }
 
 /**
