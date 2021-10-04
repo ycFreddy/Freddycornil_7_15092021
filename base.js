@@ -256,23 +256,6 @@ const select = (data) => {
 }
 
 /**
- * Requete principale
- */
-const requete = document.getElementById('requete')
-requete.addEventListener('input', () => {
-  if (requete.value.length > 2) {
-    afficheListe(rechercher(requete.value))
-    select(rechercher(requete.value))
-  } else {
-    select(recipes)
-  }
-})
-if (requete.value === '') select(recipes)
-requete.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') { e.preventDefault() }
-})
-
-/**
  * Affiche le liste de recette
  * @param {*} data tableau de recette
  */
@@ -295,3 +278,25 @@ const afficheListe = (data) => {
     afficheCarte(elmt, col)
   })
 }
+
+/**
+ * Requete principale
+ */
+const requete = document.getElementById('requete')
+requete.addEventListener('input', (e) => {
+  if (requete.value.length > 2) {
+    afficheListe(rechercher(requete.value))
+    select(rechercher(requete.value))
+  } else {
+    select(recipes)
+  }
+})
+
+if (requete.value === '') select(recipes)
+requete.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { e.preventDefault() }
+})
+
+requete.addEventListener('click', (e) => {
+  select(recipes)
+})
