@@ -268,7 +268,7 @@ const afficheListe = (data) => {
 }
 
 /**
- * Initialisation de la selction
+ * Initialisation de la selection
  */
 const tabTag = []
 tabTag.ingredients = []
