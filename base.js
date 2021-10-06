@@ -10,11 +10,20 @@ import { recipes } from './recipes.js'
  */
 const rechercher = (value) => {
   const reg = new RegExp('\\b' + value + '\\b', 'i')
-  // let reg = new RegExp (value, 'i')
-  const resultIngredient = recipes.filter(({ ingredients }) => ingredients.find(({ ingredient }) => ingredient.match(reg)))
-  const resultUstensile = recipes.filter(({ ustensils }) => ustensils.find(el => el.match(reg)))
-  const resultNomRecette = recipes.filter(({ name }) => name.match(reg))
-  const resultAppareil = recipes.filter(({ appliance }) => appliance.match(reg))
+  const resultNomRecette = []
+  const resultIngredient = []
+  const resultUstensile = []
+  const resultAppareil = []
+  for (const i of recipes) {
+    if (i.name.match(reg)) { resultNomRecette.push(i) }
+    if (i.appliance.match(reg)) { resultAppareil.push(i) }
+    for (const j of i.ingredients) {
+      if (j.ingredient.match(reg)) { resultIngredient.push(i) }
+    }
+    for (const k of i.ustensils) {
+      if (k.match(reg)) { resultUstensile.push(i) }
+    }
+  }
   return new Set(resultIngredient.concat(resultUstensile).concat(resultNomRecette).concat(resultAppareil))
 }
 
